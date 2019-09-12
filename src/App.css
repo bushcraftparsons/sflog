@@ -1,12 +1,14 @@
-svg.otter-logo {
-  /* animation: App-logo-translate infinite 20s linear; */
-}
+/* svg.otter-logo {
+  animation: App-logo-translate infinite 20s linear;
+} */
 
-@keyframes App-logo-translate {
+
+
+/* @keyframes App-logo-translate {
   from {
     transform: translate(0vw);
   }
   to {
     transform: translate(100vw);
   }
-}
+} */
