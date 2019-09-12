@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  sflog-prod:
+    container_name: sflog-prod
+    build:
+      context: .
+      dockerfile: Dockerfile-prod
+    ports:
+      - '80:80'
