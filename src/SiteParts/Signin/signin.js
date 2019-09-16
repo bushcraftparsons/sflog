@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/*jshint esversion: 9 */
 /*Signing in with Google https://developers.google.com/identity/sign-in/web/sign-in#before_you_begin*/
 import React from 'react';
 const GOOGLE_BUTTON_ID = 'google-sign-in-button';
@@ -27,6 +27,9 @@ class GoogleSignIn extends React.Component {
     // The ID token you need to pass to your backend:
     var id_token = googleUser.getAuthResponse().id_token;
     console.log("ID Token: " + id_token);
+
+    sessionStorage.setItem(`user`, JSON.stringify(profile));
+    sessionStorage.setItem(`jwtToken`, id_token);
   }
   render() {
     return (

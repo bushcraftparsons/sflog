@@ -3,7 +3,7 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Planeicon from '../../Icons/plane.js';
-class Titlebar extends React.Component {
+class Homepage extends React.Component {
     render() {
       return (
         <Navbar bg="light" expand="lg">
@@ -26,4 +26,4 @@ class Titlebar extends React.Component {
       );
     }
   }
-  export default Titlebar;
+  export default Homepage;

@@ -1,14 +1,14 @@
-/*jshint esversion: 6 */
+/*jshint esversion: 9 */
 import React from 'react';
-import Titlebar from '../Main/Titlebar';
 import './Login.css';
 import GoogleSignIn from './signin';
+import Container from 'react-bootstrap/Container';
 class Login extends React.Component {
     render() {
       return (
-        <container className="login-body">
+        <Container className="login-body">
             <GoogleSignIn/>
-        </container>
+        </Container>
       );
     }
   }
