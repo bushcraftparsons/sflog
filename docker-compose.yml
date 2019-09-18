@@ -12,3 +12,4 @@ services:
       - '3001:3000'
     environment:
       - NODE_ENV=development
+      - REACT_APP_GO_SERVER=http://localhost:8080

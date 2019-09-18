@@ -8,3 +8,5 @@ services:
       dockerfile: Dockerfile-prod
     ports:
       - '80:80'
+    environment:
+      - REACT_APP_GO_SERVER=http://10.0.1.104:8080
