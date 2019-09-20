@@ -50,7 +50,7 @@ class Titlebar extends React.Component {
       }
   }
     loggedIn(){
-      if(state.loggedIn){
+      if(this.state.loggedIn){
         return <SignOut />
       }else{
         return <SignIn />
