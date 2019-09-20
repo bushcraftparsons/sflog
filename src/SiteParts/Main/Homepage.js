@@ -5,8 +5,9 @@ import Container from 'react-bootstrap/Container';
 class Homepage extends React.Component {
     render() {
       return (
-        <Titlebar />
-        <Container className="login-body"/>
+        <Container className="login-body">
+          <Titlebar />
+        </Container>
       );
     }
   }

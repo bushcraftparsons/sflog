@@ -9,25 +9,7 @@ const profile = {
   getEmail:function(){return "bushcraftparsons@gmail.com";}
 };
 
-function Test() {
-  fetch(process.env.REACT_APP_GO_SERVER + '/')
-    .then(function(response) {
-        if(response.ok) {
-            return response.json();
-        }
-        throw new Error('Network response was not ok.');
-    })
-    .then(data => {
-      console.log("Fetched test request from api");
-      console.log(data);
-    })
-    .catch(error => {
-        console.log({ error, isLoading: false });
-    });
-}
-
 function App() {
-  Test();
   //https://aws.amazon.com/blogs/compute/task-networking-in-aws-fargate/
   console.log("React app root:" + process.env.REACT_APP_GO_SERVER + " NODE_ENV:" + process.env.NODE_ENV);
   if(process.env.NODE_ENV==="development"){
