@@ -1,6 +1,6 @@
 /*jshint esversion: 9 */
 import React from 'react';
-import Login from '../Signin/Login';
+import Login from '../Auth/Login';
 import Homepage from './Homepage';
 class Main extends React.Component {
     constructor(props) {

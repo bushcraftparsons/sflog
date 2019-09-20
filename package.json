@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "REACT_APP_GO_SERVER=https://sflog.formyer.com:8080 react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
