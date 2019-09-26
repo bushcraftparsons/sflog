@@ -1,10 +1,62 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+#sfl-body{
+  position: absolute;
+  top: 100px;
+  bottom: 0;
+  padding:60px;
+  width:100%;
+  background: url("./logo.svg");
+  background-repeat: no-repeat;
+  background-origin: content-box;/*Make image respect padding*/
+}
+#sign-out-button, #google-sign-in-button{
+  width:100px;
+  height:40px;
+  margin:2px;
+}
+.abcRioButtonSvgImageWithFallback.abcRioButtonIconImage.abcRioButtonIconImage18{
+  display:inline;
+}
+/**The span containing the google sign in button text and the one containing sign out text*/
+.abcRioButtonContents span{
+  font-size: 0.9375rem;
+  font-weight: 400;
+}
+/**Unset the google styling*/
+.abcRioButton{
+  all:unset !important;
+}
+.abcRioButtonSvg{
+  display:inline !important;
+}
+.abcRioButtonIcon{
+  all: unset !important;
+  position: absolute;
+  /* Adjust these values accordingly */
+  top: 5px;
+  left: 0px;
+}
+.abcRioButtonContentWrapper{
+  all: unset !important;
+}
+.abcRioButtonContents{
+  all: unset !important;
+  position:absolute;
+  left:20px;
+  line-height: 30px;
+}
+.abcRioButtonLightBlue{
+  all: unset !important;
+  color:white !important;
+}
+div.abcRioButton.abcRioButtonLightBlue{
+  all: unset !important;
+  width:200px;
+}
+#titleButtons{
+  height:40px;
+}
+.otter-logo{
+  height:40px;
 }
 
 code {

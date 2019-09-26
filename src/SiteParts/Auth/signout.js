@@ -1,7 +1,7 @@
 /*jshint esversion: 9 */
 /*Signing out with Google https://developers.google.com/identity/sign-in/web/sign-in#before_you_begin*/
 import React from 'react';
-import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
 class SignOut extends React.Component{
     signOut() {
         var auth2 = window.gapi.auth2.getAuthInstance();
@@ -12,7 +12,7 @@ class SignOut extends React.Component{
 
       render(){
           return(
-            <Nav.Link href="#" onclick="signOut();">Sign out</Nav.Link>
+            <Button href="#" onClick="signOut();" id="sign-out-button">Sign out</Button>
           );
       }
 }
