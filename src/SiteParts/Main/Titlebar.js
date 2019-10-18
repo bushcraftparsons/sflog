@@ -20,6 +20,9 @@ class Titlebar extends React.Component {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
+            <Nav>
+              <h1>Scilly Flight Logging</h1>
+            </Nav>
             <Nav className="ml-auto">
               <div id="titleButtons">
                 <SignIn GOOGLE_BUTTON_ID={this.props.GOOGLE_BUTTON_ID}/>
