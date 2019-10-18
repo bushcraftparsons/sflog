@@ -3,19 +3,67 @@ import React from 'react';
 import styled from 'styled-components';
 import Record from './Record';
 import SliderBar from '../Widgets/SliderBar';
+
 class RecordBar extends React.Component {
-    getRecords(){
-        let result = [];
-        for(let i=1; i<=12; i++){
-            result.push( <ListRecord key={i}><Record date="2019-03-20" aircraft="GBIHO-DHC6"/></ListRecord>);
-        }
-        return result;
+    constructor(props){
+        super(props);
+        this.state = {records:[],
+                    startRecord:1,
+                    endRecord:10};
+    }
+    componentDidMount(){
+        //Fetch all needed variables for the form here
+        this.getRecords(this.state.startRecord, this.state.endRecord);
+    }
+    /**Returns records from start to end in date desc. */
+    getRecords(start, end){
+        let values = {start:start,end:end};
+        let fetchParams = {  
+            method: 'POST',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization':this.props.user.googleToken
+            },
+            body: JSON.stringify(values)
+        };
+        //process.env.REACT_APP_GO_SERVER is set in package.json (production)
+        //or in docker-compose.yml (development)
+        fetch(process.env.REACT_APP_GO_SERVER + '/listLogs', fetchParams)
+        .then(response => {
+            if(response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            if (data.status) {
+              //Logs have been returned
+              let arrayLogs = data.logs;
+              let result = [];
+              for(let i=0; i<arrayLogs.length; i++){
+                  let log = arrayLogs[i];
+                  console.log(log);
+                  result.push(<ListRecord key={i}>
+                      <Record 
+                        log={log}
+                      /></ListRecord>);
+              }
+              this.setState({records:result});
+              return;
+            }
+            throw new Error(`Logs not returned`);
+          })
+        .catch(error => {
+            console.log({ error, gotLogs: false });
+            this.setState({records:[]});
+        });
     }
     render(){
         return(
             <SliderBar 
                 childWidth={350}
-                children={this.getRecords()}
+                children={this.state.records}
                 arrowColour={'222'}
             >
             </SliderBar>

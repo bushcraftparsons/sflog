@@ -6,33 +6,34 @@ import Col from 'react-bootstrap/Col';
 import styled from 'styled-components';
 import bin from '../../Icons/bin.svg';
 import pen from '../../Icons/pen.svg';
+import dayjs from '../../Utility/day';
 class Record extends React.Component {
     render(){
         return(
             <LogCard bg="primary" border="secondary" style={{ width: '18rem' }}>
-                <Card.Header as="h5">{this.props.date}</Card.Header>
+                <Card.Header as="h5">{new dayjs.utc(this.props.log.date).local().format("L")}</Card.Header>
                 <Card.Body>
                     <DeleteLog className = "deleteLog" onClick={this.deleteLog}></DeleteLog>
                     <EditLog className = "editLog" onClick={this.editLog}></EditLog>
-                    <Card.Title>{this.props.aircraft}</Card.Title>
+                    <Card.Title>{this.props.log.aircraft + "-" + this.props.log.type}</Card.Title>
                     <Row>
-                        <Col>Departure</Col><Col xs={6}>LEQ 10:20</Col>
+                        <Col>Departure</Col><Col xs={6}>{this.props.log.depPlace + " " + new dayjs.utc(this.props.log.depTime).local().format("LT")}</Col>
                     </Row><Row>
-                        <Col>Arrival</Col><Col xs={6}>ISC 10:40</Col>
+                        <Col>Arrival</Col><Col xs={6}>{this.props.log.arrPlace + " " + new dayjs.utc(this.props.log.arrTime).local().format("LT")}</Col>
                     </Row><Row>
-                        <Col>Flight time (mins)</Col><Col xs={6}>20</Col>
+                        <Col>Flight time (mins)</Col><Col xs={6}>{this.props.log.flightDuration}</Col>
                     </Row><Row>
-                        <Col>Inst App</Col><Col xs={6}>True</Col>
+                        <Col>Inst App</Col><Col xs={6}>{(this.props.log.instrumentApproach)?"True":"False"}</Col>
                     </Row><Row>
-                        <Col>Night flight time (mins)</Col><Col xs={6}>0</Col>
+                        <Col>Night flight time (mins)</Col><Col xs={6}>{this.props.log.nightFlightDuration}</Col>
                     </Row><Row>
-                        <Col>Log</Col><Col xs={6}>Yes</Col>
+                        <Col>Log</Col><Col xs={6}>{(this.props.log.log)?"Yes":"No"}</Col>
                     </Row><Row>
-                        <Col>Comments</Col><Col xs={6}>Had a great time, saw dolphins</Col>
+                        <Col>Comments</Col><Col xs={6}>{this.props.log.comments}</Col>
                     </Row><Row>
-                        <Col>SP/MP</Col><Col xs={6}>MP</Col>
+                        <Col>SP/MP</Col><Col xs={6}>{this.props.log.pilotNumber}</Col>
                     </Row><Row>
-                        <Col>Capacity</Col><Col xs={6}>P1</Col>
+                        <Col>Capacity</Col><Col xs={6}>{this.props.log.capacity}</Col>
                     </Row>
                     
                 </Card.Body>

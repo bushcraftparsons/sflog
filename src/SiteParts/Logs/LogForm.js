@@ -102,7 +102,6 @@ class LogForm extends React.Component {
               }
               schema.aircraft = yup.string().required().oneOf(result);
               result.sort();
-              console.log("Setting state with aircraft");
               this.setState({aircraft:result});
               return;
             }
@@ -142,8 +141,6 @@ class LogForm extends React.Component {
               }
               schema.place = yup.string().required().oneOf(result);
               result.sort();
-              console.log("Setting state with places");
-              console.log(result);
               this.setState({places:result});
               return;
             }
@@ -182,8 +179,6 @@ class LogForm extends React.Component {
               }
               schema.capacity = yup.string().required().oneOf(result);
               result.sort();
-              console.log("Setting state with capacity");
-              console.log(result);
               this.setState({capacity:result});
               return;
             }

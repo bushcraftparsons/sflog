@@ -19,6 +19,41 @@ class App extends React.Component {
       subscribed:false
     };
   }
+
+  testLogin(googleToken, email){
+    let fetchParams = {  
+      method: 'POST',
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization':googleToken
+      },
+      body: JSON.stringify({
+      'email': email
+      })
+  };
+  //process.env.REACT_APP_GO_SERVER is set in package.json (production)
+  //or in docker-compose.yml (development)
+  fetch(process.env.REACT_APP_GO_SERVER + '/login', fetchParams)
+  .then(response => {
+      if(response.ok) {
+          return response.json();
+      }
+      throw new Error('Network response was not ok.');
+  })
+  .then(data => {
+      if (data.status) {
+        //User is subscribed to our system
+        console.log("User subscribed");
+        return;
+      }
+      throw new Error(`User not recognised`);
+    })
+  .catch(error => {
+      console.log({ error, loggedin: false });
+      console.log("User not subscribed");
+  });
+  }
   //https://docs.aws.amazon.com/AmazonS3/latest/user-guide/add-cors-configuration.html
   componentDidMount() {
     window.gapi.signin2.render(
@@ -30,16 +65,19 @@ class App extends React.Component {
         onsuccess: this.onSuccess.bind(this),
       },
     );
+    const email = "bushcraftparsons@gmail.com";
+    const token = ENV['GOOGLETOKEN'];
     if(process.env.NODE_ENV==="development"){
       this.setState({
         firstName:"Susannah",
         lastName:"Parsons",
         name:"Susannah Parsons",
-        email:"bushcraftparsons@gmail.com",
-        googleToken:"eyJhbGciOiJSUzI1NiIsImtpZCI6IjNkYjNlZDZiOTU3NGVlM2ZjZDlmMTQ5ZTU5ZmYwZWVmNGY5MzIxNTMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiOTQ4MDgyMDUzMDQwLXIxdGVhZDQ4Z2tzdXE5MDJtMWc0Zm80cnNrNXFqMXR1LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiOTQ4MDgyMDUzMDQwLXIxdGVhZDQ4Z2tzdXE5MDJtMWc0Zm80cnNrNXFqMXR1LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTExMjM4Mzg5MDI1MDgzNDg2ODI3IiwiZW1haWwiOiJidXNoY3JhZnRwYXJzb25zQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoidW9GY0J1MlVHTXBTbml4b3RHR0V6USIsIm5hbWUiOiJTdXNhbm5haCBQYXJzb25zIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BQXVFN21CWDc0bFRWcXBnUXh0UDN6MHhpUDhJU052d0ZWOXRwY1BuTVdTVj1zOTYtYyIsImdpdmVuX25hbWUiOiJTdXNhbm5haCIsImZhbWlseV9uYW1lIjoiUGFyc29ucyIsImxvY2FsZSI6ImVuLUdCIiwiaWF0IjoxNTcxMzkxODk5LCJleHAiOjE1NzEzOTU0OTksImp0aSI6IjBhOGUwYTk0MGM5ZjJhYWM3ZDk3NGQ2MDZiNTdiY2QyYzYyOWViNWUifQ.T-qij_f5joxraMJdnw9V96669ytICIHFjiLMzlrUuMKRxjDfonjukaq4SHDvQMo1ma-_VPXUWCZEWuB-u_Cwspp1RjVqb7Jzc61nXS490UkCSvPLc1aX6uvAAgMZQgwfa6Pg__LowyT3ESpxyIndGevptUdsIk2n15HG9c39enthtj9taMesTk5D98u2fbn04a3ISOhrTphOg3KSC1uQZJ0P1rZFcndHCqlXpSXaeD-pXb0rqOsY69-WZRMQCkdXdrHCmGCt7ez_T-4BxMqYrQnLHU-EnMY5cvVbg3QZjo222S1d9-ShB_b17wocqF1mxh4IbDVaRtDU-4LTMTWypg",
+        email:email,
+        googleToken:token,
         subscribed:true
       });
     }
+    // this.testLogin(token, email);
   }
   /**
    * onSuccess runs when the user signs in with Google sign in
@@ -101,7 +139,7 @@ class App extends React.Component {
 
   getWelcomeMessage(){
     if(this.state.subscribed){
-      return (<p id="welcome">Welcome {this.state.firstName}</p>);
+      return (<p>Welcome {this.state.firstName}</p>);
     }
   }
 
