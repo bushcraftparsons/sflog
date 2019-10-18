@@ -34,13 +34,13 @@ const schema = yup.object({
         }
     ).notRequired(),
     arrPlace: yup.string().notRequired(),
+    nightFlightDuration: yup.number().notRequired().positive().integer(),
     flightDuration: yup.number().when(['depTime', 'arrTime'], {
         is:(depTime, arrTime) => depTime && arrTime,
-        then: yup.number().notRequired(),
+        then: yup.number().notRequired().positive().integer(),
         otherwise: yup.number().required('Flight duration is required when arrival and departure are not completed').positive().integer()
     }),
     instrumentApproach: yup.bool().required(),
-    nightFlightDuration: yup.number().notRequired(),
     log: yup.bool().required(),
     comments: yup.string().notRequired(),
     pilotNumber: yup.string().required().oneOf(['SP','MP']),
@@ -349,12 +349,17 @@ class LogForm extends React.Component {
                     onSubmit={this.submitLog.bind(this)}
                     initialValues={{
                         date: this.now(),
+                        aircraft: "",
+                        depPlace:"",
+                        depTime:"",
+                        arrPlace:"",
+                        arrTime:"",
+                        flightDuration:"",
+                        nightFlightDuration:"",
                         instrumentApproach: true,
                         log: true,
-                        arrTime:"",
-                        depTime:"",
+                        comments: "",
                         pilotNumber:"SP",
-                        flightDuration:"",
                         capacity:"P1"
                     }}
                 >
@@ -522,7 +527,7 @@ class LogForm extends React.Component {
                                 <Form.Group  controlId="validationFormik07">
                                     <Form.Label>Flight duration</Form.Label>
                                     <Form.Control
-                                        type="text"
+                                        type="number"
                                         name="flightDuration"
                                         placeholder="Duration in minutes"
                                         value={values.flightDuration}
@@ -536,7 +541,7 @@ class LogForm extends React.Component {
                                 <Form.Group  controlId="validationFormik09">
                                     <Form.Label>Night flight duration</Form.Label>
                                     <Form.Control
-                                        type="text"
+                                        type="number"
                                         name="nightFlightDuration"
                                         placeholder="Duration in minutes"
                                         value={values.nightFlightDuration}
