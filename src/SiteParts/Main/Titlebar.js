@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Planeicon from '../../Icons/plane.js';
 import SignOut from '../Auth/signout';
 import SignIn from '../Auth/signin';
+import styled from 'styled-components';
 class Titlebar extends React.Component {
     render() {
       return (
@@ -18,20 +19,21 @@ class Titlebar extends React.Component {
               // style={{ background: "#333", padding: "16px" }}
             />
           </Navbar.Brand>
+          <Navbar.Brand href="#home">Scilly Flight Log</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav>
-              <h1>Scilly Flight Logging</h1>
-            </Nav>
+          <NavCollapse>
             <Nav className="ml-auto">
               <div id="titleButtons">
                 <SignIn GOOGLE_BUTTON_ID={this.props.GOOGLE_BUTTON_ID}/>
                 <SignOut />
               </div>
             </Nav>
-          </Navbar.Collapse>
+          </NavCollapse>
         </Navbar>
       )
     }
   }
+  const NavCollapse = styled(Navbar.Collapse)`
+    z-index:40;
+  `;
   export default Titlebar;
