@@ -297,14 +297,14 @@ export default class MultiSuggest extends React.Component {
                     </div>
                 </Alert>
                 <div style={{position:"relative"}}>
-                <SuggestionsBox as="select" 
+                <SuggestionsBox 
                     id={this.props.controlId}
                     multiple={false}
                     name={this.props.name}
                     value={this.props.value}
                     onChange={(e)=>{
                         console.log("Selection changed");
-                        this.props.handleChange(e);
+                        this.props.onChange(e);
                     }}
                     onBlur={this.props.handleBlur}
                     size={(this.state.widgetHasFocus && this.state.showSuggestions)?3:0}
@@ -314,18 +314,18 @@ export default class MultiSuggest extends React.Component {
                     if(index===this.state.selectedIndex){
                         return (
                         <SuggestionSelected key={index} onMouseDown={this.selectedOptionClick.bind(this,index)}
-                         value={option} label={option}/>
+                         value={option} label={option}>{option}</SuggestionSelected>
                         );
                     }
                     return (
                     <Suggestion key={index} onMouseDown={this.selectedOptionClick.bind(this, index)}
-                    value={option} label={option}/>
+                    value={option} label={option}>{option}</Suggestion>
                     );
                 })}
                 </SuggestionsBox>
                 </div>
                 {this.state.showSecondOptionSuggestions && this.state.widgetHasFocus &&
-                    <SecondOptionSuggestionBox as="select" 
+                    <SecondOptionSuggestionBox 
                         multiple={false}
                         size="3">
                     {this.state.secondOptionSuggestions.map((option, index) => {
@@ -349,17 +349,22 @@ export default class MultiSuggest extends React.Component {
     }
 }
 
-const SuggestionsBox = styled(Form.Control)`
+const SuggestionsBox = styled.ul`
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
 position:absolute;
 width:100%;
 background-color:#222;
+color:#fff;
 border: 2px solid white;
 display:inline-block;
 padding-inline-start: 25px;
 padding-inline-end: 25px;
 height: 100px;
-overflow: hidden;
+overflow-x: hidden;
 overflow-y: scroll;
+-webkit-overflow-scrolling: touch;
 z-index:20;
 ${props => !(props.show && props.hasFocus) ? 
     css`
@@ -371,29 +376,40 @@ ${props => !(props.show && props.hasFocus) ?
   :``
 }`;
 
-const SecondOptionSuggestionBox = styled(Form.Control)`
+const SecondOptionSuggestionBox = styled.ul`
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
 position:absolute;
 width:100%;
 background-color:#222;
+color:#fff;
 border: 2px solid white;
 display:inline-block;
 padding-inline-start: 25px;
 padding-inline-end: 25px;
 height: 100px;
-overflow: hidden;
+overflow-x: hidden;
 overflow-y: scroll;
+-webkit-overflow-scrolling: touch;
 z-index:20;`;
 
-const SuggestionSelected = styled.option`
+const SuggestionSelected = styled.li`
 list-style-type: none;
+font-size:16px;
 display:block;
 background-color:white;
-color:#303030;`;
+color:#303030;
+z-index:21;
+height:33px;`;
 
-const Suggestion = styled.option`
+const Suggestion = styled.li`
 list-style-type: none;
+font-size:16px;
 display:block;
 color: #FFF;
+z-index:21;
+height:33px;
 &:hover {
     background-color:white;
     color:#303030;

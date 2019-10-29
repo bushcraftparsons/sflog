@@ -22,7 +22,8 @@ class SliderBar extends React.Component {
             childWidth:props.childWidth,
             totalChildren:0,
             visibleChildren:0,
-            hideLeft:true
+            hideLeft:true,
+            hideRight:true
         };
         this.sliderBarRef = React.createRef();
     }

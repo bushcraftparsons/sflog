@@ -396,7 +396,8 @@ class LogForm extends React.Component {
                             isValid={touched.aircraft && !errors.aircraft}
                             options={this.state.aircraft}
                             forceUpperCase={true}
-                            errors={errors.aircraft}/>
+                            errors={errors.aircraft}
+                            onChange={handleChange}/>
                         <Form.Row>
                             <Col>
                                 <MultiSuggest 
@@ -413,7 +414,8 @@ class LogForm extends React.Component {
                                     isValid={touched.depPlace && !errors.depPlace}
                                     options={this.state.places}
                                     forceUpperCase={true}
-                                    errors={errors.depPlace}/>
+                                    errors={errors.depPlace}
+                                    onChange={handleChange}/>
                             </Col>
                             <Col>
                                 <Form.Group  controlId="validationFormik04">
@@ -473,7 +475,8 @@ class LogForm extends React.Component {
                                     isValid={touched.arrPlace && !errors.arrPlace}
                                     options={this.state.places}
                                     forceUpperCase={true}
-                                    errors={errors.arrPlace}/>
+                                    errors={errors.arrPlace}
+                                    onChange={handleChange}/>
                             </Col>
                             <Col>
                                 <Form.Group  controlId="validationFormik06">
