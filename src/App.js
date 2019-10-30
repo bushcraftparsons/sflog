@@ -56,13 +56,14 @@ class App extends React.Component {
   }
   //https://docs.aws.amazon.com/AmazonS3/latest/user-guide/add-cors-configuration.html
   componentDidMount() {
+    console.log("Attempting to mount sign in button");
     window.gapi.signin2.render(
       GOOGLE_BUTTON_ID,
       {
         width: 200,
         height: 50,
         //Bind 'this' to the callback function, otherwise it won't be able to setState.
-        onsuccess: this.onSuccess.bind(this),
+        onsuccess: this.logIn.bind(this),
       },
     );
     const email = "bushcraftparsons@gmail.com";
@@ -90,7 +91,8 @@ class App extends React.Component {
     BasicProfile.getEmail()// This is null if the 'email' scope is not present.
    * @param {*} googleUser 
    */
-  onSuccess(googleUser) {
+  logIn(googleUser) {
+    console.log(googleUser);
     //This should be bound to method already in componentDidMount
     const profile = googleUser.getBasicProfile();
     //Logged in to Google, but we need to check if user is subscribed.
@@ -137,6 +139,16 @@ class App extends React.Component {
     });
   }
 
+  logOut(){
+    this.setState({
+      firstName:"",
+      lastName:"",
+      email:"",
+      googleToken:null,
+      subscribed:false
+    });//Return to the default state
+  }
+
   getWelcomeMessage(){
     if(this.state.subscribed){
       return (<p>Welcome {this.state.firstName}</p>);
@@ -147,7 +159,7 @@ class App extends React.Component {
     //https://aws.amazon.com/blogs/compute/task-networking-in-aws-fargate/
     return (
       <React.Fragment>
-        <Titlebar auth={this.state.auth} authhandler={this.authhandler} GOOGLE_BUTTON_ID={GOOGLE_BUTTON_ID} user={this.state}/>
+        <Titlebar auth={this.state.auth} logOut={this.logOut} authhandler={this.authhandler} GOOGLE_BUTTON_ID={GOOGLE_BUTTON_ID} user={this.state}/>
         <div id="sfl-body"> 
           {this.getWelcomeMessage()}
           <Jumbotron id="content" className="col-md-offset-3">

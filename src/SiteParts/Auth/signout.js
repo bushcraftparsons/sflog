@@ -6,8 +6,9 @@ class SignOut extends React.Component{
     signOut() {
         var auth2 = window.gapi.auth2.getAuthInstance();
         auth2.signOut().then(function () {
+          this.props.logOut();
           console.log('User signed out.');
-        });
+        }.bind(this));
       }
 
       render(){
