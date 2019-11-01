@@ -247,6 +247,8 @@ class LogForm extends React.Component {
               //Log was added successfully
               console.log("log added");
               actions.setSubmitting(false);
+              //Close form once completed.
+              this.props.hide();
               return;
             }
             throw new Error(`User not recognised`);
@@ -356,7 +358,7 @@ class LogForm extends React.Component {
             e.value = varr[0] + ":" + varr[1];
         }else{
             if(v.length===1){
-                e.value = v + ":00";
+                e.value = "0" + v + ":00";
             }else if(v.length===2){
                 e.value = v + ":00";
             }else if(v.length===3){
