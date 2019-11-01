@@ -207,16 +207,16 @@ class LogForm extends React.Component {
         let at = values.aircraft.split("|");
         values.aircraft = at[0];
         values.type = at[1];
-        //Date values should be in format: 2006-01-02T15:04:05Z07:00
-        //Note that this means if user is on GMT, but adds a date in BST e.g. June, it should be Z01:00
-        let date = values.date;
-        values.date = new Date(date).toISOString();//Need: 2006-01-02T15:04:05Z
+        //Date values should be in format: 2006-01-02T15:04:05Z - this is UTC +-0
+        let date = new Date(values.date);
+        let shortDate = values.date;
+        values.date = date.toISOString();//Need: 2006-01-02T15:04:05Z
         values.date = values.date.split(".")[0] + "Z";
         if(values.arrTime!==""){
-            let depTime = values.depTime;
-            let arrTime = values.arrTime;
-            values.depTime = new Date(date + "T" + depTime).toISOString();//"2019-10-18T05:15:00.000Z"
-            values.arrTime = new Date(date + "T" +  arrTime).toISOString();//"2019-10-18T05:15:00.000Z"
+            let depTime = new Date(shortDate + "T" + values.depTime);
+            let arrTime = new Date(shortDate + "T" +  values.arrTime);
+            values.depTime = depTime.toISOString();//"2019-10-18T05:15:00.000Z"
+            values.arrTime = arrTime.toISOString();//"2019-10-18T05:15:00.000Z"
             values.depTime = values.depTime.split(".")[0] + "Z";
             values.arrTime = values.arrTime.split(".")[0] + "Z";
         }
