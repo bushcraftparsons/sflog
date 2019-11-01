@@ -29,50 +29,6 @@
   background-repeat: no-repeat;
   background-origin: content-box;/*Make image respect padding*/
 }
-#sign-out-button, #google-sign-in-button{
-  width:100px;
-  height:40px;
-  margin:2px;
-}
-.abcRioButtonSvgImageWithFallback.abcRioButtonIconImage.abcRioButtonIconImage18{
-  display:inline;
-}
-/**The span containing the google sign in button text and the one containing sign out text*/
-.abcRioButtonContents span{
-  font-size: 0.9375rem;
-  font-weight: 400;
-}
-/**Unset the google styling*/
-.abcRioButton{
-  all:unset !important;
-}
-.abcRioButtonSvg{
-  display:inline !important;
-}
-.abcRioButtonIcon{
-  all: unset !important;
-  position: absolute;
-  /* Adjust these values accordingly */
-  top: 5px;
-  left: 0px;
-}
-.abcRioButtonContentWrapper{
-  all: unset !important;
-}
-.abcRioButtonContents{
-  all: unset !important;
-  position:absolute;
-  left:20px;
-  line-height: 30px;
-}
-.abcRioButtonLightBlue{
-  all: unset !important;
-  color:white !important;
-}
-div.abcRioButton.abcRioButtonLightBlue{
-  all: unset !important;
-  width:200px;
-}
 #titleButtons{
   height:40px;
 }

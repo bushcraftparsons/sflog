@@ -24,7 +24,7 @@ class Titlebar extends React.Component {
           <NavCollapse>
             <Nav className="ml-auto">
               <div id="titleButtons">
-                <SignIn GOOGLE_BUTTON_ID={this.props.GOOGLE_BUTTON_ID}/>
+                <SignIn logIn={this.props.logIn} failedLogIn={this.props.failedLogIn}/>
                 <SignOut logOut={this.props.logOut} />
               </div>
             </Nav>

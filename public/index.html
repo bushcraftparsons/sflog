@@ -19,7 +19,14 @@
       name="google-signin-client_id"
       content="948082053040-r1tead48gksuq902m1g4fo4rsk5qj1tu.apps.googleusercontent.com"
     />
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script type="text/javascript" src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- The below script logs the messages between gapi and the window object -->
+    <!-- <script>
+      window.addEventListener('message', function(event) {
+        console.log("Window event:");
+        console.log(event.data);
+      });
+    </script> -->
 
     <!--
       manifest.json provides metadata used when your web app is installed on a

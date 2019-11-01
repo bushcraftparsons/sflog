@@ -6,8 +6,6 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import Titlebar from './SiteParts/Main/Titlebar';
 import Body from './SiteParts/Main/Body';
 
-const GOOGLE_BUTTON_ID = 'google-sign-in-button';
-
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -56,29 +54,19 @@ class App extends React.Component {
   }
   //https://docs.aws.amazon.com/AmazonS3/latest/user-guide/add-cors-configuration.html
   componentDidMount() {
-    console.log("Attempting to mount sign in button");
-    window.gapi.signin2.render(
-      GOOGLE_BUTTON_ID,
-      {
-        width: 200,
-        height: 50,
-        //Bind 'this' to the callback function, otherwise it won't be able to setState.
-        onsuccess: this.logIn.bind(this),
-      },
-    );
-    const email = "bushcraftparsons@gmail.com";
-    const token = ENV['GOOGLETOKEN'];
-    if(process.env.NODE_ENV==="development"){
-      this.setState({
-        firstName:"Susannah",
-        lastName:"Parsons",
-        name:"Susannah Parsons",
-        email:email,
-        googleToken:token,
-        subscribed:true
-      });
-    }
-    // this.testLogin(token, email);
+      const email = "bushcraftparsons@gmail.com";
+      const token = ENV['GOOGLETOKEN'];
+      if(process.env.NODE_ENV==="development"){
+        this.setState({
+          firstName:"Susannah",
+          lastName:"Parsons",
+          name:"Susannah Parsons",
+          email:email,
+          googleToken:token,
+          subscribed:true
+        });
+      }
+      // this.testLogin(token, email);
   }
   /**
    * onSuccess runs when the user signs in with Google sign in
@@ -139,6 +127,10 @@ class App extends React.Component {
     });
   }
 
+  failedLogIn(){
+    console.log("Failed to log in");
+  }
+
   logOut(){
     this.setState({
       firstName:"",
@@ -159,7 +151,7 @@ class App extends React.Component {
     //https://aws.amazon.com/blogs/compute/task-networking-in-aws-fargate/
     return (
       <React.Fragment>
-        <Titlebar auth={this.state.auth} logOut={this.logOut} authhandler={this.authhandler} GOOGLE_BUTTON_ID={GOOGLE_BUTTON_ID} user={this.state}/>
+        <Titlebar auth={this.state.auth} logIn={this.logIn.bind(this)} failedLogIn={this.failedLogIn.bind(this)} logOut={this.logOut.bind(this)} authhandler={this.authhandler} user={this.state}/>
         <div id="sfl-body"> 
           {this.getWelcomeMessage()}
           <Jumbotron id="content" className="col-md-offset-3">
