@@ -219,6 +219,9 @@ class LogForm extends React.Component {
             values.depTime = values.depTime.split(".")[0] + "Z";
             values.arrTime = values.arrTime.split(".")[0] + "Z";
         }
+        if(typeof values.nightFlightDuration === "string"){
+            values.nightFlightDuration = 0;
+        }
         console.log(values);
         let fetchParams = {  
             method: 'POST',
