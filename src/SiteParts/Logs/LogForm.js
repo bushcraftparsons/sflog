@@ -208,6 +208,7 @@ class LogForm extends React.Component {
         values.aircraft = at[0];
         values.type = at[1];
         //Date values should be in format: 2006-01-02T15:04:05Z07:00
+        //Note that this means if user is on GMT, but adds a date in BST e.g. June, it should be Z01:00
         let date = values.date;
         values.date = new Date(date).toISOString();//Need: 2006-01-02T15:04:05Z
         values.date = values.date.split(".")[0] + "Z";
@@ -339,6 +340,39 @@ class LogForm extends React.Component {
             }
         }
     }
+    timeFieldComplete(e, handleBlur, handleChange){
+        let v = e.target.value;
+        if(v.includes(":")){
+            let varr = v.split(":");
+            if(varr[0].length===1){
+                varr[0] = varr[0] + "0";
+            }
+            if(varr[1].length===0){
+                varr[1] = "00";
+            }
+            if(varr[1].length===1){
+                varr[1] = varr[1] + "0";
+            }
+            e.value = varr[0] + ":" + varr[1];
+        }else{
+            if(v.length===1){
+                e.value = v + ":00";
+            }else if(v.length===2){
+                e.value = v + ":00";
+            }else if(v.length===3){
+                if(v.substring(2)==="0"){
+                    e.value = "0" + v.substring(0,1) + ":" + v.substring(1);
+                }else{
+                    e.value = v.substring(0,2) + ":" + v.substring(2) + "0";
+                }
+            }else{
+                e.value = v.substring(0,2) + ":" + v.substring(2);
+            }
+        }
+        e.target.value = e.value;
+        handleChange(e);
+        handleBlur(e);
+    }
     render(){
         return (
             <Jumbotron>
@@ -429,6 +463,7 @@ class LogForm extends React.Component {
                                         ref={(node)=>{this.depTime = node;}}
                                         placeholder="hh:mm"
                                         value={values.depTime}
+                                        onBlur={(e)=>this.timeFieldComplete(e, handleBlur,handleChange)}
                                         onChange={(e)=>{
                                             let v = e.target.value;
                                             if(v.includes(":")){
@@ -452,6 +487,11 @@ class LogForm extends React.Component {
                                                     handleChange(e);
                                                     setFieldValue("depTime", hour + ":" + varr[1]);
                                                     return;
+                                                }
+                                            }else{
+                                                //No colon typed
+                                                if(v.length===4){
+                                                    e.value = v.substring(0,2) + ":" + v.substring(2);
                                                 }
                                             }
                                             handleChange(e);
@@ -490,6 +530,7 @@ class LogForm extends React.Component {
                                         ref={(node)=>{this.arrTime = node;}}
                                         placeholder="hh:mm"
                                         value={values.arrTime}
+                                        onBlur={(e)=>this.timeFieldComplete(e, handleBlur,handleChange)}
                                         onChange={(e)=>{
                                             let v = e.target.value;
                                             if(v.includes(":")){
