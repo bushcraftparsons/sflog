@@ -141,6 +141,21 @@ export default class MultiSuggest extends React.Component {
     }
 
     handleKeyPress(e){
+        if(e.key === 'Tab'){
+            //User is tabbing out, accept current selection and close select
+            //Accept selection
+            let selection = this.state.suggestions[this.state.selectedIndex];
+            this.setState({searchVal:selection});
+            this.textSearch.current.value = selection;
+            this.setFilteredLists();
+            this.props.updateValue(this.textSearch.current.value);
+            //Close lists
+            this.setState({
+                showSuggestions:false,
+                showSecondOptionSuggestions:false
+            });
+            return;
+        }
         let newText = this.textSearch.current.value;
         if(this.props.forceUpperCase){
             newText = newText.toUpperCase();
@@ -281,7 +296,7 @@ export default class MultiSuggest extends React.Component {
                     onFocus={this.searchFocus.bind(this)}
                     autoComplete="disabled"
                     ref={this.textSearch}
-                    onKeyUp={this.handleKeyPress.bind(this)}
+                    onKeyDown={this.handleKeyPress.bind(this)}
                     placeholder="Search.."
                 />
                 <Alert show={this.state.openAddOptionDialogue} variant="primary">
@@ -306,7 +321,6 @@ export default class MultiSuggest extends React.Component {
                         console.log("Selection changed");
                         this.props.onChange(e);
                     }}
-                    onBlur={this.props.handleBlur}
                     size={(this.state.widgetHasFocus && this.state.showSuggestions)?3:0}
                     hasFocus={this.state.widgetHasFocus}
                     show={this.state.showSuggestions}>
