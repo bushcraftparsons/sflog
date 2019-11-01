@@ -249,6 +249,7 @@ class LogForm extends React.Component {
               actions.setSubmitting(false);
               //Close form once completed.
               this.props.hide();
+              this.props.getRecords();
               return;
             }
             throw new Error(`User not recognised`);
@@ -400,7 +401,7 @@ class LogForm extends React.Component {
                         arrTime:"",
                         flightDuration:"",
                         nightFlightDuration:"",
-                        instrumentApproach: true,
+                        instrumentApproach: false,
                         log: true,
                         comments: "",
                         pilotNumber:"SP",
