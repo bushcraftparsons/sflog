@@ -342,7 +342,7 @@ class LogForm extends React.Component {
             }
         }
     }
-    timeFieldComplete(e, handleBlur, handleChange){
+    timeFieldComplete(e, handleBlur, handleChange, setFieldValue){
         let v = e.target.value;
         if(v.includes(":")){
             let varr = v.split(":");
@@ -373,6 +373,16 @@ class LogForm extends React.Component {
         }
         e.target.value = e.value;
         handleChange(e);
+        //Make sure flight duration is completed automatically if possible
+        let atime = this.arrTime.value;
+        let dtime = this.depTime.value;
+        if(atime.includes(":") && dtime.includes(":")){
+            //We have both departure and arrival times, calculate duration
+            let end = dayjs().set('hour', atime.split(":")[0]).set('minute',atime.split(":")[1]).set('second',0);
+            let start = dayjs().set('hour', dtime.split(":")[0]).set('minute',dtime.split(":")[1]).set('second',0);
+            let df2 = end.diff(start, "minutes");
+            setFieldValue("flightDuration", df2);
+        }
         handleBlur(e);
     }
     render(){
@@ -465,7 +475,7 @@ class LogForm extends React.Component {
                                         ref={(node)=>{this.depTime = node;}}
                                         placeholder="hh:mm"
                                         value={values.depTime}
-                                        onBlur={(e)=>this.timeFieldComplete(e, handleBlur,handleChange)}
+                                        onBlur={(e)=>this.timeFieldComplete(e, handleBlur,handleChange,setFieldValue)}
                                         onChange={(e)=>{
                                             let v = e.target.value;
                                             if(v.includes(":")){
@@ -475,8 +485,8 @@ class LogForm extends React.Component {
                                                     let atime = this.arrTime.value;
                                                     if(atime.includes(":")){
                                                         //We have both departure and arrival times, calculate duration
-                                                        let end = dayjs().set('hour', atime.split(":")[0]).set('minute',atime.split(":")[1]);
-                                                        let start = dayjs().set('hour', varr[0]).set('minute',varr[1]);
+                                                        let end = dayjs().set('hour', atime.split(":")[0]).set('minute',atime.split(":")[1]).set('second',0);
+                                                        let start = dayjs().set('hour', varr[0]).set('minute',varr[1]).set('second',0);
                                                         let df2 = end.diff(start, "minutes");
                                                         setFieldValue("flightDuration", df2);
                                                     }
@@ -532,7 +542,7 @@ class LogForm extends React.Component {
                                         ref={(node)=>{this.arrTime = node;}}
                                         placeholder="hh:mm"
                                         value={values.arrTime}
-                                        onBlur={(e)=>this.timeFieldComplete(e, handleBlur,handleChange)}
+                                        onBlur={(e)=>this.timeFieldComplete(e, handleBlur,handleChange,setFieldValue)}
                                         onChange={(e)=>{
                                             let v = e.target.value;
                                             if(v.includes(":")){
@@ -542,8 +552,8 @@ class LogForm extends React.Component {
                                                     let dtime = this.depTime.value;
                                                     if(dtime.includes(":")){
                                                         //We have both departure and arrival times, calculate duration
-                                                        let start = dayjs().set('hour', dtime.split(":")[0]).set('minute',dtime.split(":")[1]);
-                                                        let end = dayjs().set('hour', varr[0]).set('minute',varr[1]);
+                                                        let start = dayjs().set('hour', dtime.split(":")[0]).set('minute',dtime.split(":")[1]).set('second',0);
+                                                        let end = dayjs().set('hour', varr[0]).set('minute',varr[1]).set('second',0);
                                                         let df2 = end.diff(start, "minutes");
                                                         setFieldValue("flightDuration", df2);
                                                     }
