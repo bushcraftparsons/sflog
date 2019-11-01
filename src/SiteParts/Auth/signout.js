@@ -19,6 +19,7 @@ class SignOut extends React.Component{
       }
 }
 const SignoutButton = styled(Button)`
+  display:inline-block;
   width:100px;
   height:40px;
   margin:2px;
