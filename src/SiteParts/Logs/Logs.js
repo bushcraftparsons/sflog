@@ -44,7 +44,6 @@ class Logs extends React.Component {
               let result = [];
               for(let i=0; i<arrayLogs.length; i++){
                   let log = arrayLogs[i];
-                  console.log(log);
                   result.push(<ListRecord key={i}>
                       <Record 
                         log={log}
