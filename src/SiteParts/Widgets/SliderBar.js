@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
  * props:
  * essential:
  * childWidth - the desired width of children
- * children - an array of children e.g. cards or images
+ * children - an array of children e.g. cards or images but inside li tags
  * arrowColour - colour to use for the sliderbar arrows, numerical (without the preceding hash)
  * optional:
  * onDragStart - a function called when dragging starts
@@ -20,7 +20,6 @@ class SliderBar extends React.Component {
             translateX: 0,
             lastTranslateX: 0,
             childWidth:props.childWidth,
-            totalChildren:0,
             visibleChildren:0,
             hideLeft:true,
             hideRight:true
@@ -30,6 +29,12 @@ class SliderBar extends React.Component {
     componentWillUnmount() {
         window.removeEventListener('mousemove', this.handleMouseMove);
         window.removeEventListener('mouseup', this.handleMouseUp);
+    }
+    shouldComponentUpdate(nextProps, nextState){
+      if(nextProps.children.length !== this.props.children.length){
+        this.resetChildNumber(nextProps);//Set starting position
+      }
+      return true;
     }
     handleMouseDown ({ clientX }) {
         window.addEventListener('mousemove', this.handleMouseMove.bind(this));
@@ -58,8 +63,18 @@ class SliderBar extends React.Component {
         this.translate(clientX - this.state.originalX + this.state.lastTranslateX);
         
     }
+    resetChildNumber(nextProps){
+      if(nextProps.children.length<=this.state.visibleChildren){
+          this.hideLeftMask();
+          this.hideRightMask();
+          return;//Don't slide the bar when there are too few cards
+      }
+      if(0>=(nextProps.children.length-this.state.visibleChildren)*this.state.cardWidth *-1){
+          this.showRightMask();
+      }
+  }
     translate(amountToTranslate){
-        if(this.state.totalChildren<=this.state.visibleChildren){
+        if(this.props.children.length<=this.state.visibleChildren){
             this.hideLeftMask();
             this.hideRightMask();
             return;//Don't slide the bar when there are too few cards
@@ -74,8 +89,8 @@ class SliderBar extends React.Component {
         }else{
           this.showLeftMask();
         }
-        if(amountToTranslate<(this.state.totalChildren-this.state.visibleChildren)*this.state.cardWidth *-1){
-            amountToTranslate = (this.state.totalChildren-this.state.visibleChildren)*this.state.cardWidth *-1;
+        if(amountToTranslate<(this.props.children.length-this.state.visibleChildren)*this.state.cardWidth *-1){
+            amountToTranslate = (this.props.children.length-this.state.visibleChildren)*this.state.cardWidth *-1;
             this.hideRightMask();
         }else{
             this.showRightMask();
@@ -112,9 +127,9 @@ class SliderBar extends React.Component {
         this.resize();
     }
     resize(){
-        this.setState({visibleChildren:Math.ceil(window.innerWidth/this.props.childWidth),
-            cardWidth:this.sliderBarRef.current.offsetWidth/Math.ceil(window.innerWidth/this.props.childWidth),
-            totalChildren:this.props.children.length});
+      let width = window.innerWidth;
+        this.setState({visibleChildren:Math.ceil(width/this.props.childWidth),
+            cardWidth:this.sliderBarRef.current.offsetWidth/Math.ceil(width/this.props.childWidth)});
     }
     handleSelect(selectedIndex, e){
         this.setState({
@@ -155,7 +170,8 @@ class SliderBar extends React.Component {
                 <Slider
                      onMouseDown={this.handleMouseDown.bind(this)}
                      x={translateX}
-                     isDragging={isDragging}>
+                     isDragging={isDragging}
+                     id="sflSlider">
                     {this.props.children}
                 </Slider>
             </SliderContainer>
