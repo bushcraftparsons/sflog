@@ -5,6 +5,6 @@ services:
     container_name: sflog-prod
     build:
       context: .
-      dockerfile: Dockerfile-prod
+      dockerfile: Dockerfile-prod-aws
     ports:
       - '80:80'
