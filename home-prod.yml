@@ -25,7 +25,7 @@ services:
       - ONLY_SUBDOMAINS=true #optional
       - STAGING=false #optional
     volumes:
-      - app-volume:/config
+      - app-volume:/config/www
     ports:
       - 443:443
       - 80:80 #allows http validation

@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "REACT_APP_GO_SERVER=http://localhost:8080 react-scripts start",
-    "build": "REACT_APP_GO_SERVER=https://sflog.formyer.com:8080 react-scripts build",
+    "build": "REACT_APP_GO_SERVER=https://localhost:8080 react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
