@@ -39,8 +39,3 @@ services:
       - '.:/app'
     ports:
       - '8080:8080'
-  sfldb:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: SFLog-017
