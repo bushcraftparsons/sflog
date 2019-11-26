@@ -33,7 +33,7 @@ services:
   sflapi:
     container_name: sflogapi
     build:
-      context: ../../sflogapi
+      context: ../sflogapi
       dockerfile: Dockerfile
     volumes:
       - '.:/app'
