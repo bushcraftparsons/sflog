@@ -116,6 +116,8 @@ class App extends React.Component {
         if (data.status) {
           //User is subscribed to our system
           newState.subscribed = true;
+          let user = data.user;
+          console.log(user);
           this.setState(newState);
           return;
         }
