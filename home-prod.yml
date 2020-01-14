@@ -1,6 +1,7 @@
 version: "3"
 volumes:
   app-volume:
+  key-volume:
 services:
   sflbuild:
     build:
@@ -26,6 +27,7 @@ services:
       - STAGING=true #optional
     volumes:
       - app-volume:/config/www
+      - key-volume:/config/keys
     ports:
       - 443:443
       - 80:80 #allows http validation
@@ -36,6 +38,6 @@ services:
       context: ../sflogapi
       dockerfile: Dockerfile
     volumes:
-      - '.:/app'
+      - 'key-volume:/keys'
     ports:
       - '8080:8080'
