@@ -27,7 +27,7 @@ services:
       - STAGING=true #optional
     volumes:
       - app-volume:/config/www
-      - key-volume:/config/keys
+      - key-volume:/etc/letsencrypt/live/sfl.formyer.com/
     ports:
       - 443:443
       - 80:80 #allows http validation
