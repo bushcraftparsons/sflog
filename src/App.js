@@ -16,6 +16,7 @@ class App extends React.Component {
       googleToken:null,
       subscribed:false
     };
+    console.log("Trying to get app.js to update");
   }
 
   testLogin(googleToken, email){
@@ -32,6 +33,7 @@ class App extends React.Component {
   };
   //process.env.REACT_APP_GO_SERVER is set in package.json (production)
   //or in docker-compose.yml (development)
+  console.log("REACT APP GO SERVER is: " + process.env.REACT_APP_GO_SERVER);
   fetch(process.env.REACT_APP_GO_SERVER + '/login', fetchParams)
   .then(response => {
       if(response.ok) {

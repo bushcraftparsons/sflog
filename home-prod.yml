@@ -23,7 +23,7 @@ services:
       - EMAIL=bushcraftparsons@gmail.com #optional
       - DHLEVEL=2048 #optional
       - ONLY_SUBDOMAINS=true #optional
-      - STAGING=false #optional
+      - STAGING=true #optional
     volumes:
       - app-volume:/config/www
     ports:

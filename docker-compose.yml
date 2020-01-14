@@ -1,14 +1,32 @@
-version: "3.7"
+version: "3"
+volumes:
+  app-volume:
 services:
-  sflog:
-    container_name: sflog
+  sflbuild:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: Dockerfile-prod-home
     volumes:
-      - '.:/app'
-      - './node_modules:/app/node_modules'
-    ports:
-      - '3001:3000'
+      - app-volume:/app/build
+  sflweb:
+    image: linuxserver/letsencrypt
+    container_name: sflweb
+    cap_add:
+      - NET_ADMIN
     environment:
-      - NODE_ENV=development
+      - PUID=1000 #Maps the container user to the host user instead of root
+      - PGID=1000
+      - TZ=Europe/London
+      - URL=formyer.com
+      - SUBDOMAINS=sfl,
+      - VALIDATION=http
+      - EMAIL=bushcraftparsons@gmail.com #optional
+      - DHLEVEL=2048 #optional
+      - ONLY_SUBDOMAINS=true #optional
+      - STAGING=true #optional
+    volumes:
+      - app-volume:/config/www
+    ports:
+      - 443:443
+      - 80:80 #allows http validation
+    restart: unless-stopped
