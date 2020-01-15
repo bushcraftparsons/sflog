@@ -1,7 +1,7 @@
 version: "3"
 volumes:
   app-volume:
-  key-volume:
+  le_keys:
 services:
   sflbuild:
     build:
@@ -24,10 +24,10 @@ services:
       - EMAIL=bushcraftparsons@gmail.com #optional
       - DHLEVEL=2048 #optional
       - ONLY_SUBDOMAINS=true #optional
-      - STAGING=true #optional
+      - STAGING=true #optional change to false for production
     volumes:
       - app-volume:/config/www
-      - key-volume:/etc/letsencrypt/live/sfl.formyer.com/
+      - le_keys:/config
     ports:
       - 443:443
       - 80:80 #allows http validation
@@ -37,7 +37,7 @@ services:
     build:
       context: ../sflogapi
       dockerfile: Dockerfile
-    volumes:
-      - 'key-volume:/keys'
     ports:
       - '8080:8080'
+    volumes:
+      - le_keys:/le_keys
