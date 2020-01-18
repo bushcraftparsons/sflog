@@ -29,12 +29,28 @@ class SliderBar extends React.Component {
     componentWillUnmount() {
         window.removeEventListener('mousemove', this.handleMouseMove);
         window.removeEventListener('mouseup', this.handleMouseUp);
+        window.removeEventListener('touchmove', this.handleTouchMove);
+        window.removeEventListener('touchend', this.handleTouchEnd);
     }
     shouldComponentUpdate(nextProps, nextState){
       if(nextProps.children.length !== this.props.children.length){
         this.resetChildNumber(nextProps);//Set starting position
       }
       return true;
+    }
+    handleTouchStart (e){
+        const touch = e.touches[0];
+        window.addEventListener('touchmove', this.handleTouchMove.bind(this));
+        window.addEventListener('touchend', this.handleTouchEnd.bind(this));
+
+        if (this.props.onDragStart) {
+          this.props.onDragStart();
+        }
+
+        this.setState({
+          originalX: touch.clientX,
+          isDragging: true
+        });
     }
     handleMouseDown ({ clientX }) {
         window.addEventListener('mousemove', this.handleMouseMove.bind(this));
@@ -54,6 +70,14 @@ class SliderBar extends React.Component {
     }
     handleRightClick(){
         this.translate((this.state.childWidth*-1) - this.state.originalX + this.state.lastTranslateX);
+    }
+    handleTouchMove(e){
+      const touch = e.touches[0];
+      const { isDragging } = this.state;
+        if (!isDragging) {
+          return;
+        }
+        this.translate(touch.clientX - this.state.originalX + this.state.lastTranslateX);
     }
     handleMouseMove ({ clientX }) {
         const { isDragging } = this.state;
@@ -104,6 +128,23 @@ class SliderBar extends React.Component {
             });
           }
         });
+    }
+    handleTouchEnd () {
+      window.removeEventListener('touchmove', this.handleTouchMove.bind(this));
+      window.removeEventListener('touchend', this.handleTouchEnd.bind(this));
+  
+      this.setState(
+        {
+          originalX: 0,
+          lastTranslateX: this.state.translateX,
+          isDragging: false
+        },
+        () => {
+          if (this.props.onDragEnd) {
+            this.props.onDragEnd();
+          }
+        }
+      );
     }
     handleMouseUp () {
         window.removeEventListener('mousemove', this.handleMouseMove.bind(this));
@@ -169,6 +210,7 @@ class SliderBar extends React.Component {
                 }
                 <Slider
                      onMouseDown={this.handleMouseDown.bind(this)}
+                     onTouchStart={this.handleTouchStart.bind(this)}
                      x={translateX}
                      isDragging={isDragging}
                      id="sflSlider">
